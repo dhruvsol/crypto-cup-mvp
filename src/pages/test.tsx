@@ -3,7 +3,9 @@ import NFTCard from "../components/nfts/Nft.card";
 const test = () => {
   return (
     <>
-      <NFTCard />
+      <div className="pt-10 mx-10">
+        <NFTCard />
+      </div>
     </>
   );
 };
