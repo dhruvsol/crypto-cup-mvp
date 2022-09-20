@@ -35,7 +35,7 @@ const NFTCard = () => {
               <h1 className="text-lg text-white">#200</h1>
             </div>
           </div>
-          <div className="absolute flex justify-center gap-x-1 bottom-6 right-10">
+          <div className="absolute flex justify-center gap-x-2 bottom-6 right-10">
             <h1 className="text-white font-bold text-base">ChessChamp</h1>
             <h1 className="text-[#7980B7] bg-[#3D4267] px-2 font-bold ">NFT</h1>
           </div>
