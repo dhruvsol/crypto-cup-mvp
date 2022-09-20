@@ -140,7 +140,7 @@ const NFTs = () => {
         uri: URI,
         label: "Crypto Cup",
         icon: "https://candypay.fun/logo.png",
-        network: "mainnet",
+        network: "devnet",
         reference: reference.publicKey.toString(),
       },
       {
