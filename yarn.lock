@@ -381,7 +381,7 @@
     "@solana/buffer-layout-utils" "^0.2.0"
     buffer "^6.0.3"
 
-"@solana/web3.js@^1.32.0", "@solana/web3.js@^1.61.0":
+"@solana/web3.js@^1.32.0", "@solana/web3.js@^1.61.0", "@solana/web3.js@^1.62.1":
   version "1.62.1"
   resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.62.1.tgz#b0f98a033086016741fd6335548e92262964ac48"
   integrity sha512-ylkYM7u3dmTrBDQ1rkHF9kQTkKO+C7TqUvTJ0CfAFKUkQhDLsK2JUARdhkhERmJRqou0kSNmPd1x78IMg+FdTw==

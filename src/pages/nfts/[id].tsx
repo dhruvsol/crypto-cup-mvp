@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { useUser } from "use-supabase-hooks";
 import { supabase } from "../../lib/supabase";
@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { Web3Storage } from "web3.storage";
 import { TransactionRequestURLFields, encodeURL, createQR } from "@solana/pay";
+import { Keypair } from "@solana/web3.js";
 const roleName = [
   "",
   "pawn",
@@ -51,6 +52,9 @@ const NFTs = () => {
   const client = new Web3Storage({
     token: process.env.NEXT_PUBLIC_WEB3_STORAGE as string,
   });
+  const reference = useMemo(() => {
+    return Keypair.generate();
+  }, []);
   useEffect(() => {
     const GetInfo = async () => {
       setLoading(true);
@@ -137,6 +141,7 @@ const NFTs = () => {
         label: "Crypto Cup",
         icon: "https://candypay.fun/logo.png",
         network: "mainnet",
+        reference: reference.publicKey.toString(),
       },
       {
         headers: {
