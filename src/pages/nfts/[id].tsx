@@ -6,8 +6,15 @@ import { supabase } from "../../lib/supabase";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Web3Storage } from "web3.storage";
-import { TransactionRequestURLFields, encodeURL, createQR } from "@solana/pay";
-import { Keypair } from "@solana/web3.js";
+import {
+  TransactionRequestURLFields,
+  encodeURL,
+  createQR,
+  FindReferenceError,
+  findReference,
+} from "@solana/pay";
+import { BsArrowUpRight } from "react-icons/bs";
+import { clusterApiUrl, Connection, Keypair } from "@solana/web3.js";
 const roleName = [
   "",
   "pawn",
@@ -49,6 +56,8 @@ const NFTs = () => {
   const [loadingNFT, setLoadingNFT] = useState<boolean>(false);
   const [claimNFT, setClaimNFT] = useState<boolean>(false);
   const [solanaURl, setSolanaUrl] = useState<string>("");
+  const [success, setSuccess] = useState<boolean>(false);
+  const connection = new Connection(clusterApiUrl("devnet"));
   const client = new Web3Storage({
     token: process.env.NEXT_PUBLIC_WEB3_STORAGE as string,
   });
@@ -219,6 +228,54 @@ const NFTs = () => {
       });
     });
   };
+
+  // Check every 0.5s if the transaction is completed
+  useEffect(() => {
+    if (!success) {
+      const interval = setInterval(async () => {
+        try {
+          // Check if there is any transaction for the reference
+          const signatureInfo = await findReference(
+            connection,
+            reference.publicKey
+          );
+          const result = await connection.getTransaction(
+            signatureInfo.signature
+          );
+          const mint = result?.transaction.signatures[1] as string;
+          const publicKey = result?.transaction.signatures[2] as string;
+
+          await sendAddress(mint, publicKey).then(() => {
+            setSuccess(true);
+          });
+        } catch (e) {
+          if (e instanceof FindReferenceError) {
+            return;
+          }
+          console.error("Unknown error", e);
+        }
+      }, 500);
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, []);
+  const sendAddress = async (mint: string, pubkey: string) => {
+    await axios.post(
+      "https://chess-champs-api-production.up.railway.app/api/v1/utils/mint-address",
+      {
+        user: router.query.id,
+        public_key: pubkey,
+        mint_address: mint,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionToken?.access_token}`,
+        },
+      }
+    );
+  };
+
   return (
     <>
       <div className="absolute z-10 top-0 w-full h-1/2">
@@ -267,19 +324,19 @@ const NFTs = () => {
               <div>
                 <p className="text-base text-[#464C72]">Level</p>
                 <h1 className="text-base lg:text-xl text-white">
-                  {xpInfo?.level === undefined ? 200 : xpInfo?.level}
+                  {xpInfo?.level === undefined ? 0 : xpInfo?.level}
                 </h1>
               </div>
               <div>
                 <p className="text-base text-[#464C72]">xp</p>
                 <h1 className="text-base lg:text-xl text-white">
-                  {xpInfo?.xp === undefined ? 200 : xpInfo?.xp}XP
+                  {xpInfo?.xp === undefined ? 0 : xpInfo?.xp}XP
                 </h1>
               </div>
               <div>
                 <p className="text-base text-[#464C72]">Rank</p>
                 <h1 className="text-base lg:text-xl text-white">
-                  #{xpInfo?.rank === undefined ? 200 : xpInfo?.rank}
+                  #{xpInfo?.rank === undefined ? 0 : xpInfo?.rank}
                 </h1>
               </div>
             </div>
@@ -327,7 +384,7 @@ const NFTs = () => {
         </div>
       )}
       {/* https://cloudflare-ipfs.com/ipfs/bafybeib56hhje6qszhh6mdvbw3qy3grd5trswlbsc7ej4a5syqoxsyp63i/xp-card.png */}
-      {mint && (
+      {mint && !success && (
         <>
           {!loadingNFT ? (
             <div className="relative z-40">
@@ -407,6 +464,39 @@ const NFTs = () => {
             </div>
           )}
         </>
+      )}
+      {success && (
+        <div className="z-40 pt-20 relative flex justify-center items-center min-h-screen flex-col gap-y-3 ">
+          <Image
+            src="/assets/success.png"
+            alt="square Icon"
+            width={45}
+            height={45}
+          />
+          <div className="flex items-center flex-col mt-3">
+            <h1 className="font-normal font-dm-serif text-white text-2xl lg:text-4xl ">
+              Successfully Claimed
+            </h1>
+            <p className="text-[#464C72] font-medium text-xs lg:text-base">
+              You can check your wallet for the NFT
+            </p>
+          </div>
+          <div className="my-10">
+            <Image
+              src={`https://cloudflare-ipfs.com/ipfs/${imgUrl}/xp-card.png`}
+              alt="nft Image"
+              width={600}
+              height={250}
+              priority
+            />
+          </div>
+
+          <div>
+            <button className="w-80 h-10 flex justify-center items-center gap-x-2 border border-[#32375D] text-white ">
+              View <BsArrowUpRight fontSize={"1rem"} />
+            </button>
+          </div>
+        </div>
       )}
     </>
   );
