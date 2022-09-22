@@ -16,6 +16,6 @@ export default defineNextConfig({
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["cloudflare-ipfs.com"],
+    domains: ["cloudflare-ipfs.com", "cdn.discordapp.com"],
   },
 });

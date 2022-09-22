@@ -307,27 +307,21 @@ const NFTs = () => {
       </div>
       {!mint && (
         <div className="z-40 pt-20 relative flex justify-center items-center flex-col gap-y-3 ">
-          <Image
-            src="/assets/squareicon.svg"
-            alt="square Icon"
-            width={25}
-            height={25}
-          />
           <div className="flex items-center flex-col mt-3">
-            <h1 className="font-normal font-dm-serif text-white text-2xl lg:text-4xl ">
-              Welcome to ChessNFT
+            <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
+              Mint a Chess Mates
             </h1>
-            <p className="text-[#464C72] font-medium text-xs lg:text-base">
+            <p className="text-white font-medium text-xs lg:text-base">
               Just a few steps to get started and get your NFT
             </p>
           </div>
-          <div className="relative bg-[#151729] px-3 py-2 w-[20rem] h-[20rem] lg:w-[30rem] lg:h-max lg:flex lg:flex-col lg:items-start lg:p-8 lg:mt-7 lg:rounded-xl">
+          <div className="relative bg-[#FFFFFF] px-3 py-2 w-[20rem] h-[20rem] lg:w-[30rem] lg:h-max lg:flex lg:flex-col lg:items-start lg:p-8 lg:mt-7 lg:rounded-xl">
             <div className="flex justify-center items-center  gap-x-4 ">
               <div className=" bg-[#5344FF] p-2 rounded-full  ">
                 <AiFillCheckCircle size={"1.2rem"} color={"white"} />
               </div>
               <div className="flex flex-col justify-center py-4 items-start ">
-                <h1 className="text-xs text-white font-medium lg:text-base">
+                <h1 className="text-xs text-black font-medium lg:text-base">
                   Discord Connected
                 </h1>
                 <h3 className="text-xs text-[#464C72]  font-medium lg:text-base">
@@ -347,19 +341,19 @@ const NFTs = () => {
             <div className="lg:mx-12 mt-6 lg:my-8 flex justify-center lg:justify-start gap-x-10 items-center w-[18rem]">
               <div>
                 <p className="text-base text-[#464C72]">Level</p>
-                <h1 className="text-base lg:text-xl text-white">
+                <h1 className="text-base lg:text-xl text-black">
                   {xpInfo?.level === undefined ? 0 : xpInfo?.level}
                 </h1>
               </div>
               <div>
                 <p className="text-base text-[#464C72]">xp</p>
-                <h1 className="text-base lg:text-xl text-white">
+                <h1 className="text-base lg:text-xl text-black">
                   {xpInfo?.xp === undefined ? 0 : xpInfo?.xp}XP
                 </h1>
               </div>
               <div>
                 <p className="text-base text-[#464C72]">Rank</p>
-                <h1 className="text-base lg:text-xl text-white">
+                <h1 className="text-base lg:text-xl text-black">
                   #{xpInfo?.rank === undefined ? 0 : xpInfo?.rank}
                 </h1>
               </div>

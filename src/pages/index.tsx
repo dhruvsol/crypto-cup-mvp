@@ -23,20 +23,31 @@ const Home: NextPage = ({ user }: any) => {
     <>
       <div className="relative flex lg:justify-between flex-col lg:flex-row min-h-screen  items-center overflow-hidden">
         <div className="text-white z-20  absolute bottom-6 flex items-center flex-col  lg:static lg:items-start max-w-[28rem] lg:ml-[6rem] xl:ml-[12rem] ">
-          <Image
-            src={"/assets/squareicon.svg"}
-            alt={"square image"}
-            width={25}
-            height={25}
-          />
-          <h1 className="lg:text-4xl text-xl mt-2 font-dm-serif text-center  lg:text-left">
-            The NFT for the chess <br /> players & enthusiasts
+          <h1 className="lg:text-5xl lg:font-bold text-xl mt-2 font-sans-pro text-center  lg:text-left">
+            Chess Mates
           </h1>
-          <p className=" text-[#6C8597] text-base font-normal my-4 text-center lg:text-left">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-            quae ab illo inventore veritatis et quasi architecto{" "}
+          <br />
+          <p className=" text-white text-base font-normal my-4 text-center lg:text-left lg:text-sm">
+            Chess Mates is a dynamic NFT that exports your Chess Champs
+            reputation on-chain and creates a unique profile picture. The NFT
+            can be updated each time you reach a new level (up to 3 times).
+            <br />
+            <br />
+            Mint yours for free with a few easy steps!
           </p>
+          <ul className="list-disc ml-4 ">
+            <li>Join our Discord server</li>
+            <li>Reach level Pawn</li>
+            <li>Setup & connect your Phantom wallet</li>
+            <li>Claim your NFT!</li>
+          </ul>
+          <br />
+          <p className=" text-white text-base font-normal my-4 text-center lg:text-left lg:text-sm">
+            Your NFT will unlock special access rights to various exclusive
+            events and also hold your player rank & score, stored directly on
+            the blockchain. Questions? Check out our FAQ
+          </p>
+          <br />
           {!User ? (
             <>
               <button
@@ -63,12 +74,12 @@ const Home: NextPage = ({ user }: any) => {
             </>
           )}
         </div>
-        <div className="absolute   top-10 -right-72">
+        <div className="absolute right-14 hidden md:block ">
           <Image
             src={"/assets/landing.svg"}
             alt={"bgimage"}
-            width={1000}
-            height={600}
+            width={500}
+            height={500}
           />
         </div>
       </div>

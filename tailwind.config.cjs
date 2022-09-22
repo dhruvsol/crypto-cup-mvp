@@ -8,6 +8,7 @@ module.exports = {
       },
       fontFamily: {
         "dm-serif": "DM Serif Display",
+        "sans-pro": "Source Sans Pro",
       },
     },
   },
