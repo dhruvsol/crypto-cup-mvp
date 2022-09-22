@@ -255,8 +255,10 @@ const NFTs = () => {
               signatureInfo.signature
             );
             setSignature(signatureInfo.signature);
-            const mint = result?.transaction.signatures[1] as string;
-            const publicKey = result?.transaction.signatures[2] as string;
+            const mint =
+              result?.transaction.message.accountKeys[1]!.toString() as string;
+            const publicKey =
+              result?.transaction.message.accountKeys[2]!.toString() as string;
             a = a + 1;
             console.log("hello", a);
             setPaid(true);
