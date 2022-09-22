@@ -134,7 +134,7 @@ const NFTs = () => {
           xp: xpInfo?.xp,
           rank: xpInfo?.rank,
           icon: roleName[highest],
-          is_winner: highest === 7 ? false : true,
+          is_winner: highest != 7 ? false : true,
         },
         {
           headers: {
@@ -143,7 +143,7 @@ const NFTs = () => {
         }
       )
       .then((r) => {
-        setImgUrl(r.data.cid);
+        setImgUrl(r.data.image_url);
         console.log(r.data);
         setLoadingNFT(false);
       });
@@ -220,9 +220,7 @@ const NFTs = () => {
     return `https://cloudflare-ipfs.com/ipfs/${meta_cid}/metadata.json`;
   };
   const uploadMeta = async () => {
-    await uploadmetadata(
-      `https://cloudflare-ipfs.com/ipfs/${imgUrl}/xp-card.png`
-    ).then(async (r) => {
+    await uploadmetadata(`${imgUrl}`).then(async (r) => {
       console.log(r);
       await GetUrl(r).then(async (r) => {
         console.log(r);
@@ -411,7 +409,7 @@ const NFTs = () => {
               {!solanaURl ? (
                 <div className="flex justify-center min-h-screen w-full items-center flex-col">
                   <Image
-                    src={`https://cloudflare-ipfs.com/ipfs/${imgUrl}/xp-card.png`}
+                    src={imgUrl}
                     alt="nft Image"
                     width={600}
                     height={250}

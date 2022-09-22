@@ -25,13 +25,7 @@ export const Success = (props: Props) => {
         </p>
       </div>
       <div className="my-10">
-        <Image
-          src={`https://cloudflare-ipfs.com/ipfs/${imgUrl}/xp-card.png`}
-          alt="nft Image"
-          width={600}
-          height={250}
-          priority
-        />
+        <Image src={imgUrl} alt="nft Image" width={600} height={250} priority />
       </div>
 
       <div>
