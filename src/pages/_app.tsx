@@ -5,7 +5,7 @@ import { Navbar } from "../components/Navigations/Navbar";
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
-      <div className="bg-black min-h-screen h-full">
+      <div className="bg-black min-h-screen h-full overflow-hidden">
         <Navbar />
         <Component {...pageProps} />
       </div>
