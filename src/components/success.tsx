@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { BsArrowUpRight } from "react-icons/bs";
 interface Props {
   imgUrl: string;
+  signature: string;
 }
 export const Success = (props: Props) => {
   const { imgUrl } = props;
@@ -33,9 +35,15 @@ export const Success = (props: Props) => {
       </div>
 
       <div>
-        <button className="w-80 h-10 flex justify-center items-center gap-x-2 border border-[#32375D] text-white ">
-          View <BsArrowUpRight fontSize={"1rem"} />
-        </button>
+        <Link
+          href={`https://explorer.solana.com/tx/${props.signature}?cluster=devnet`}
+        >
+          <a target={"_blank"}>
+            <button className="w-80 h-10 flex justify-center items-center gap-x-2 border border-[#32375D] text-white ">
+              View <BsArrowUpRight fontSize={"1rem"} />
+            </button>
+          </a>
+        </Link>
       </div>
     </div>
   );

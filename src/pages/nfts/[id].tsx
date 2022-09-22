@@ -66,6 +66,7 @@ const NFTs = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const [paid, setPaid] = useState<boolean | null>(null);
   const connection = new Connection(clusterApiUrl("devnet"));
+  const [signature, setSignature] = useState<string>("");
   const client = new Web3Storage({
     token: process.env.NEXT_PUBLIC_WEB3_STORAGE as string,
   });
@@ -253,6 +254,7 @@ const NFTs = () => {
             const result = await connection.getTransaction(
               signatureInfo.signature
             );
+            setSignature(signatureInfo.signature);
             const mint = result?.transaction.signatures[1] as string;
             const publicKey = result?.transaction.signatures[2] as string;
             a = a + 1;
@@ -488,7 +490,7 @@ const NFTs = () => {
           )}
         </>
       )}
-      {success && <Success imgUrl={imgUrl} />}
+      {success && <Success signature={signature} imgUrl={imgUrl} />}
     </>
   );
 };
