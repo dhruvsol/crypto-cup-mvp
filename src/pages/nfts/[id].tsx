@@ -421,7 +421,7 @@ const NFTs = () => {
                       setPaid(false);
                       uploadMeta();
                     }}
-                    className="bg-[#5344FF] mt-10 h-10 w-[20rem] px-5 lg:w-[20rem] rounded text-[0.7rem] text-white  lg:text-base"
+                    className="bg-[#590059] font-sans-pro font-semibold mt-10 h-10 w-[20rem] px-5 lg:w-[20rem] rounded text-[0.7rem] text-white  lg:text-base"
                   >
                     {claimNFT ? (
                       <div
@@ -446,7 +446,7 @@ const NFTs = () => {
                         </svg>
                       </div>
                     ) : (
-                      "Mint"
+                      "Claim your NFT"
                     )}
                   </button>
                 </div>

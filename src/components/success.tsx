@@ -17,11 +17,11 @@ export const Success = (props: Props) => {
         height={45}
       />
       <div className="flex items-center flex-col mt-3">
-        <h1 className="font-normal font-dm-serif text-white text-2xl lg:text-4xl ">
+        <h1 className="font-bold font-sans-pro text-white text-2xl lg:text-4xl ">
           Successfully Claimed
         </h1>
         <p className="text-[#464C72] font-medium text-xs lg:text-base">
-          You can check your wallet for the NFT
+          Now check your Phantom Wallet!
         </p>
       </div>
       <div className="my-10">
