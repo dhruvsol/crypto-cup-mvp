@@ -413,7 +413,7 @@ const NFTs = () => {
               {!solanaURl ? (
                 <div className="flex justify-center min-h-screen w-full items-center flex-col">
                   <Image
-                    src={`https://cloudflare-ipfs.com/ipfs/bafybeica5ejhi7tpufp7rbyetzqkd6atsgtxocyzp2vxdes7z6eyb5o3oq/xp-card.png`}
+                    src={`https://cloudflare-ipfs.com/ipfs/${imgUrl}/xp-card.png`}
                     alt="nft Image"
                     width={600}
                     height={250}
