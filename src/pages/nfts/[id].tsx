@@ -1,5 +1,11 @@
 import Image from "next/image";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { useUser } from "use-supabase-hooks";
 import { supabase } from "../../lib/supabase";
@@ -15,6 +21,7 @@ import {
 } from "@solana/pay";
 import { BsArrowUpRight } from "react-icons/bs";
 import { clusterApiUrl, Connection, Keypair } from "@solana/web3.js";
+import { Success } from "../../components/success";
 const roleName = [
   "",
   "pawn",
@@ -57,6 +64,7 @@ const NFTs = () => {
   const [claimNFT, setClaimNFT] = useState<boolean>(false);
   const [solanaURl, setSolanaUrl] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
+  const [paid, setPaid] = useState<boolean | null>(null);
   const connection = new Connection(clusterApiUrl("devnet"));
   const client = new Web3Storage({
     token: process.env.NEXT_PUBLIC_WEB3_STORAGE as string,
@@ -229,39 +237,53 @@ const NFTs = () => {
     });
   };
 
-  // Check every 0.5s if the transaction is completed
+  let a = 0;
   useEffect(() => {
-    if (!success) {
-      const interval = setInterval(async () => {
-        try {
-          // Check if there is any transaction for the reference
-          const signatureInfo = await findReference(
-            connection,
-            reference.publicKey
-          );
-          const result = await connection.getTransaction(
-            signatureInfo.signature
-          );
-          const mint = result?.transaction.signatures[1] as string;
-          const publicKey = result?.transaction.signatures[2] as string;
-
-          await sendAddress(mint, publicKey).then(() => {
-            setSuccess(true);
-          });
-        } catch (e) {
-          if (e instanceof FindReferenceError) {
-            return;
+    console.log("useEff on");
+    if (paid === false) {
+      const inter = setInterval(() => {
+        const GetInfo = async () => {
+          if (paid) return;
+          try {
+            // Check if there is any transaction for the reference
+            const signatureInfo = await findReference(
+              connection,
+              reference.publicKey
+            );
+            const result = await connection.getTransaction(
+              signatureInfo.signature
+            );
+            const mint = result?.transaction.signatures[1] as string;
+            const publicKey = result?.transaction.signatures[2] as string;
+            a = a + 1;
+            console.log("hello", a);
+            setPaid(true);
+            clearInterval(inter);
+            if (a === 1) {
+              sendAddress(mint, publicKey);
+            }
+          } catch (e) {
+            if (e instanceof FindReferenceError) {
+              return;
+            }
+            console.error("Unknown error", e);
           }
-          console.error("Unknown error", e);
-        }
-      }, 500);
-      return () => {
-        clearInterval(interval);
-      };
+        };
+        setTimeout(() => {
+          if (a != 1) {
+            GetInfo();
+          }
+        }, 1000);
+      }, 10000);
     }
-  }, []);
-  const sendAddress = async (mint: string, pubkey: string) => {
-    await axios.post(
+  }, [solanaURl]);
+  console.log(success, paid);
+
+  const sendAddress = useCallback((mint: string, pubkey: string) => {
+    console.log("-----insides----", success, paid);
+    if (success) return;
+    setSuccess(true);
+    axios.post(
       "https://chess-champs-api-production.up.railway.app/api/v1/utils/mint-address",
       {
         user: router.query.id,
@@ -274,7 +296,7 @@ const NFTs = () => {
         },
       }
     );
-  };
+  }, []);
 
   return (
     <>
@@ -391,7 +413,7 @@ const NFTs = () => {
               {!solanaURl ? (
                 <div className="flex justify-center min-h-screen w-full items-center flex-col">
                   <Image
-                    src={`https://cloudflare-ipfs.com/ipfs/${imgUrl}/xp-card.png`}
+                    src={`https://cloudflare-ipfs.com/ipfs/bafybeica5ejhi7tpufp7rbyetzqkd6atsgtxocyzp2vxdes7z6eyb5o3oq/xp-card.png`}
                     alt="nft Image"
                     width={600}
                     height={250}
@@ -400,6 +422,7 @@ const NFTs = () => {
                   <button
                     onClick={() => {
                       setClaimNFT(true);
+                      setPaid(false);
                       uploadMeta();
                     }}
                     className="bg-[#5344FF] mt-10 h-10 w-[20rem] px-5 lg:w-[20rem] rounded text-[0.7rem] text-white  lg:text-base"
@@ -465,39 +488,7 @@ const NFTs = () => {
           )}
         </>
       )}
-      {success && (
-        <div className="z-40 pt-20 relative flex justify-center items-center min-h-screen flex-col gap-y-3 ">
-          <Image
-            src="/assets/success.png"
-            alt="square Icon"
-            width={45}
-            height={45}
-          />
-          <div className="flex items-center flex-col mt-3">
-            <h1 className="font-normal font-dm-serif text-white text-2xl lg:text-4xl ">
-              Successfully Claimed
-            </h1>
-            <p className="text-[#464C72] font-medium text-xs lg:text-base">
-              You can check your wallet for the NFT
-            </p>
-          </div>
-          <div className="my-10">
-            <Image
-              src={`https://cloudflare-ipfs.com/ipfs/${imgUrl}/xp-card.png`}
-              alt="nft Image"
-              width={600}
-              height={250}
-              priority
-            />
-          </div>
-
-          <div>
-            <button className="w-80 h-10 flex justify-center items-center gap-x-2 border border-[#32375D] text-white ">
-              View <BsArrowUpRight fontSize={"1rem"} />
-            </button>
-          </div>
-        </div>
-      )}
+      {success && <Success imgUrl={imgUrl} />}
     </>
   );
 };
