@@ -408,6 +408,13 @@ const NFTs = () => {
             <div className="relative z-40">
               {!solanaURl ? (
                 <div className="flex justify-center min-h-screen w-full items-center flex-col">
+                  <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
+                    Claim Your NFT
+                  </h1>
+                  <br />
+                  <p className="text-white font-medium text-xs lg:text-base mb-7">
+                    Press the button below to mint your NFT
+                  </p>
                   <Image
                     src={imgUrl}
                     alt="nft Image"
@@ -452,7 +459,22 @@ const NFTs = () => {
                 </div>
               ) : (
                 <div className="flex justify-center min-h-screen w-full items-center flex-col">
+                  <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
+                    Claim Your NFT
+                  </h1>
+                  <br />
+                  <p className="text-white font-medium text-xs lg:text-base mb-7">
+                    Scan the QRCode from your wallet
+                  </p>
                   <div ref={qrRef} />
+                  <button
+                    onClick={() => {
+                      router.push(solanaURl);
+                    }}
+                    className="bg-[#590059] disabled:opacity-50 h-10 w-80 mt-5 px-5  rounded text-[0.7rem] text-white  lg:text-base"
+                  >
+                    Tap to Mint
+                  </button>
                 </div>
               )}
             </div>
