@@ -401,7 +401,6 @@ const NFTs = () => {
           </div>
         </div>
       )}
-      {/* https://cloudflare-ipfs.com/ipfs/bafybeib56hhje6qszhh6mdvbw3qy3grd5trswlbsc7ej4a5syqoxsyp63i/xp-card.png */}
       {mint && !success && (
         <>
           {!loadingNFT ? (
