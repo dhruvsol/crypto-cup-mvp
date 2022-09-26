@@ -26,16 +26,21 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className=" flex justify-center items-center px-40 ml-5 ">
+      <div className=" fixed top-0 z-50 flex justify-center items-center px-40 ml-5 ">
         <div className="hidden container lg:flex justify-between items-center gap-x-5 pt-4">
-          <Link href={"/"}>
+          <div
+            onClick={() => {
+              router.push("/");
+            }}
+          >
             <Image
               width={150}
               height={55}
+              className={"cursor-pointer"}
               src="/assets/logo.svg"
               alt="logo chess champs"
             />
-          </Link>
+          </div>
           <div className="flex justify-center  items-center ">
             <ul className="flex justify-evenly   w-[35rem] ">
               <li className="text-white font-sans-pro font-semibold cursor-pointer">

@@ -296,7 +296,7 @@ const NFTs = () => {
         <Image src="/square.png" alt="squares" layout="fill" />
       </div>
       {!mint && (
-        <div className="z-40 pt-20 relative flex justify-center items-center flex-col gap-y-3 ">
+        <div className="z-40 pt-20 relative flex justify-center min-h-screen items-center flex-col gap-y-3 ">
           <div className="flex items-center flex-col mt-3">
             <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
               Mint a Chess Mates
@@ -396,7 +396,7 @@ const NFTs = () => {
           {!loadingNFT ? (
             <div className="relative z-40">
               {!solanaURl ? (
-                <div className="flex justify-center min-h-screen w-full items-center flex-col">
+                <div className="flex justify-center min-h-screen  w-full items-center flex-col">
                   <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
                     Claim Your NFT
                   </h1>
