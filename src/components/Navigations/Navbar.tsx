@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FaDiscord } from "react-icons/fa";
@@ -27,12 +28,14 @@ export const Navbar = () => {
     <>
       <div className=" flex justify-center items-center px-40 ml-5 ">
         <div className="hidden container lg:flex justify-between items-center gap-x-5 pt-4">
-          <Image
-            width={150}
-            height={55}
-            src="/assets/logo.svg"
-            alt="logo chess champs"
-          />
+          <Link href={"/"}>
+            <Image
+              width={150}
+              height={55}
+              src="/assets/logo.svg"
+              alt="logo chess champs"
+            />
+          </Link>
           <div className="flex justify-center  items-center ">
             <ul className="flex justify-evenly   w-[35rem] ">
               <li className="text-white font-sans-pro font-semibold cursor-pointer">
