@@ -18,10 +18,11 @@ export const Navbar = () => {
     }
   }, [user]);
   useEffect(() => {
-    if (user.app_metadata.provider != "discord") {
+    if (user?.app_metadata.provider != "discord") {
       signOut();
     }
   }, [user?.app_metadata.provider]);
+
   return (
     <>
       <div className=" flex justify-center items-center px-40 ml-5 ">

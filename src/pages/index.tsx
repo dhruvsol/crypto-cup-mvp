@@ -8,7 +8,7 @@ import { supabase } from "../lib/supabase";
 const Home: NextPage = ({ user }: any) => {
   const { user: clientUser } = useUser(supabase);
   const { signIn, signOut } = useAuth(supabase);
-  console.log(clientUser);
+
   const [User, setUser] = useState<boolean>(false);
   const [UserData, setUserData] = useState<any>(null);
 
@@ -89,7 +89,6 @@ const Home: NextPage = ({ user }: any) => {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const user = await supabase.auth.api.getUserByCookie(req, res);
 
-  console.log("user", user);
   return {
     props: {
       user: user.user,

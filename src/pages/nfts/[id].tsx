@@ -144,7 +144,6 @@ const NFTs = () => {
       )
       .then((r) => {
         setImgUrl(r.data.image_url);
-        console.log(r.data);
         setLoadingNFT(false);
       });
   };
@@ -170,7 +169,6 @@ const NFTs = () => {
     return (await res).data;
   };
   const uploadmetadata = async (img: any) => {
-    console.log("meta on");
     const metadata = {
       name: "Crypto Cup",
       symbol: "CPC",
@@ -221,14 +219,10 @@ const NFTs = () => {
   };
   const uploadMeta = async () => {
     await uploadmetadata(`${imgUrl}`).then(async (r) => {
-      console.log(r);
       await GetUrl(r).then(async (r) => {
-        console.log(r);
-
         const transactionRequestURLFields: TransactionRequestURLFields = {
           link: new URL(`${r.metadata.solana_url}`),
         };
-        console.log(encodeURL(transactionRequestURLFields).href);
         const solurl = encodeURL(transactionRequestURLFields).href;
         setSolanaUrl(solurl);
         setClaimNFT(false);
@@ -238,7 +232,6 @@ const NFTs = () => {
 
   let a = 0;
   useEffect(() => {
-    console.log("useEff on");
     if (paid === false) {
       const inter = setInterval(() => {
         const GetInfo = async () => {
@@ -258,7 +251,6 @@ const NFTs = () => {
             const publicKey =
               result?.transaction.message.accountKeys[2]!.toString() as string;
             a = a + 1;
-            console.log("hello", a);
             setPaid(true);
             clearInterval(inter);
             if (a === 1) {
@@ -279,10 +271,8 @@ const NFTs = () => {
       }, 10000);
     }
   }, [solanaURl]);
-  console.log(success, paid);
 
   const sendAddress = useCallback((mint: string, pubkey: string) => {
-    console.log("-----insides----", success, paid);
     if (success) return;
     setSuccess(true);
     axios.post(
