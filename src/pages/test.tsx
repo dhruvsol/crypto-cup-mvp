@@ -1,13 +1,38 @@
+import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
-import NFTCard from "../components/nfts/Nft.card";
-const test = () => {
+const Test = () => {
+  const router = useRouter();
+
+  console.log(router.query.role);
+
   return (
     <>
-      <div className="pt-10 mx-10">
-        <NFTCard />
+      <div className="flex justify-center  min-h-screen items-center">
+        <div className="relative">
+          <Image
+            src={`/Nft/${router.query.role}.png`}
+            alt={"Nft Image"}
+            width={300}
+            height={300}
+          />
+          <h1 className="text-black/60 absolute bottom-8 left-36 text-3xl font-sans-pro font-bold">
+            {router.query.Rank}
+          </h1>
+          {router.query.winner === "true" && (
+            <div className="absolute top-0 right-0 left-0 ">
+              <Image
+                src={"/Nft/winner.png"}
+                alt={"Nft Image"}
+                width={300}
+                height={300}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
 };
 
-export default test;
+export default Test;
