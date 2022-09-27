@@ -17,7 +17,7 @@ const Test = () => {
             height={300}
           />
           <h1 className="text-black/60 absolute bottom-8 left-36 text-3xl font-sans-pro font-bold">
-            {router.query.Rank}
+            {router.query.rank}
           </h1>
           {router.query.winner === "true" && (
             <div className="absolute top-0 right-0 left-0 ">

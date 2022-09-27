@@ -19,9 +19,9 @@ import {
   FindReferenceError,
   findReference,
 } from "@solana/pay";
-import { BsArrowUpRight } from "react-icons/bs";
 import { clusterApiUrl, Connection, Keypair } from "@solana/web3.js";
 import { Success } from "../../components/success";
+import { Navbar } from "../../components/Navigations/Navbar";
 const roleName = [
   "",
   "pawn",
@@ -292,6 +292,7 @@ const NFTs = () => {
 
   return (
     <>
+      <Navbar />
       <div className="absolute z-10 top-0 w-full h-1/2">
         <Image src="/square.png" alt="squares" layout="fill" />
       </div>

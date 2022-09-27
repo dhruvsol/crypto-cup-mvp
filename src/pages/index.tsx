@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth, useUser } from "use-supabase-hooks";
+import { Navbar } from "../components/Navigations/Navbar";
 import { supabase } from "../lib/supabase";
 
 const Home: NextPage = ({ user }: any) => {
@@ -21,7 +22,8 @@ const Home: NextPage = ({ user }: any) => {
   }, [clientUser, user]);
   return (
     <>
-      <div className="relative flex lg:justify-center md:gap-x-20 flex-col lg:flex-row min-h-screen  items-center overflow-hidden">
+      <Navbar />
+      <div className="relative flex lg:justify-center md:gap-x-20 flex-col lg:flex-row min-h-screen  items-center overflow-hidden lg:mt-20">
         <div className="text-white z-20  absolute bottom-6 flex items-center flex-col  lg:static lg:items-start max-w-[28rem]  ">
           <h1 className="lg:text-5xl lg:font-bold text-xl mt-2 font-sans-pro text-center  lg:text-left">
             Chess Mates
