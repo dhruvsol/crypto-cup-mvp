@@ -20,6 +20,11 @@ const Home: NextPage = ({ user }: any) => {
       setUserData(clientUser);
     }
   }, [clientUser, user]);
+  useEffect(() => {
+    if (user?.app_metadata.provider != "discord") {
+      signOut();
+    }
+  }, [user?.app_metadata.provider]);
   return (
     <>
       <Navbar />

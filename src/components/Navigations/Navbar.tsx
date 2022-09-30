@@ -8,7 +8,6 @@ import { boolean } from "zod";
 import { supabase } from "../../lib/supabase";
 export const Navbar = () => {
   const { user, loading } = useUser(supabase);
-  const { signOut } = useAuth(supabase);
   const [userOn, setUserOn] = useState<boolean>(false);
   const router = useRouter();
   useEffect(() => {
@@ -18,27 +17,38 @@ export const Navbar = () => {
       setUserOn(false);
     }
   }, [user]);
-  useEffect(() => {
-    if (user?.app_metadata.provider != "discord") {
-      signOut();
-    }
-  }, [user?.app_metadata.provider]);
+  console.log(user);
 
   return (
     <>
       <div className="hidden fixed top-0 z-50 lg:flex justify-center w-full items-center gap-x-5 pt-4">
-        <div
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          <Image
-            width={150}
-            height={55}
-            className="cursor-pointer"
-            src="/assets/logo.svg"
-            alt="logo chess champs"
-          />
+        <div className="flex justify-center items-center gap-x-3">
+          <div
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            <Image
+              width={150}
+              height={55}
+              className="cursor-pointer"
+              src="/assets/logo.svg"
+              alt="logo chess champs"
+            />
+          </div>
+          <div className="text-white flex justify-center gap-x-2 px-4 py-1 rounded-lg border">
+            <Image
+              width={30}
+              height={30}
+              className="cursor-pointer mb-10"
+              src="/assets/candypay.svg"
+              alt="logo candypay "
+            />
+            <div>
+              <h1 className="font-bold uppercase text-[0.5rem] ">powered by</h1>
+              <h1 className="font-medium text-base ">CandyPay</h1>
+            </div>
+          </div>
         </div>
         <div className="flex justify-center  items-center ">
           <ul className="flex justify-evenly   w-[35rem] ">
