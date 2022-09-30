@@ -11,7 +11,7 @@ const Test = () => {
       <div className="flex justify-center  min-h-screen items-center">
         <div className="relative">
           <Image
-            src={`/assests/NFT/${router.query.role}.png`}
+            src={`/assets/NFT/${router.query.role}.png`}
             alt={"NFT Image"}
             width={300}
             height={300}
