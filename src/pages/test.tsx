@@ -11,7 +11,7 @@ const Test = () => {
       <div className="flex justify-center  min-h-screen items-center">
         <div className="relative">
           <Image
-            src={`/assets/NFT/${router.query.role}.png`}
+            src={`/NFT/${router.query.role}.png`}
             alt={"NFT Image"}
             width={300}
             height={300}
@@ -22,7 +22,7 @@ const Test = () => {
           {router.query.winner === "true" && (
             <div className="absolute top-0 right-0 left-0 ">
               <Image
-                src={"/Nft/winner.png"}
+                src={"/NFT/winner.png"}
                 alt={"Nft Image"}
                 width={300}
                 height={300}
