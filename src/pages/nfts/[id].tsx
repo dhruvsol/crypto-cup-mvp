@@ -245,13 +245,14 @@ const NFTs = () => {
             const result = await connection.getTransaction(
               signatureInfo.signature
             );
-            setSignature(signatureInfo.signature);
+
             const mint =
               result?.transaction.message.accountKeys[1]!.toString() as string;
             const publicKey =
               result?.transaction.message.accountKeys[2]!.toString() as string;
             a = a + 1;
             setPaid(true);
+            setSignature(mint);
             clearInterval(inter);
             if (a === 1) {
               sendAddress(mint, publicKey);

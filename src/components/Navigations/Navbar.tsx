@@ -36,19 +36,25 @@ export const Navbar = () => {
               alt="logo chess champs"
             />
           </div>
-          <div className="text-white flex justify-center gap-x-2 px-4 py-1 rounded-lg border">
-            <Image
-              width={30}
-              height={30}
-              className="cursor-pointer mb-10"
-              src="/assets/candypay.svg"
-              alt="logo candypay "
-            />
-            <div>
-              <h1 className="font-bold uppercase text-[0.5rem] ">powered by</h1>
-              <h1 className="font-medium text-base ">CandyPay</h1>
-            </div>
-          </div>
+          <Link href={"https://candypay.fun"}>
+            <a target={"_blank"}>
+              <div className="text-white flex justify-center gap-x-2 px-4 py-1 rounded-lg border">
+                <Image
+                  width={30}
+                  height={30}
+                  className="cursor-pointer mb-10"
+                  src="/assets/candypay.svg"
+                  alt="logo candypay "
+                />
+                <div>
+                  <h1 className="font-bold uppercase text-[0.5rem] ">
+                    powered by
+                  </h1>
+                  <h1 className="font-medium text-base ">CandyPay</h1>
+                </div>
+              </div>
+            </a>
+          </Link>
         </div>
         <div className="flex justify-center  items-center ">
           <ul className="flex justify-evenly   w-[35rem] ">

@@ -30,7 +30,7 @@ export const Success = (props: Props) => {
 
       <div>
         <Link
-          href={`https://explorer.solana.com/tx/${props.signature}?cluster=devnet`}
+          href={`https://explorer.solana.com/address/${props.signature}?cluster=devnet`}
         >
           <a target={"_blank"}>
             <button className="w-80 h-10 flex justify-center items-center gap-x-2 border border-[#32375D] text-white ">
