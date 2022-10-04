@@ -83,7 +83,7 @@ const NFTs = () => {
           "https://chess-champs-api-production.up.railway.app/api/v1/roles",
           {
             guild: "880024529714425887",
-            user: "983306717205004369",
+            user: router.query.id,
             role: "993835383848706128",
           },
           {
