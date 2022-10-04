@@ -1,8 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import type { GetServerSideProps, NextPage } from "next";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth, useUser } from "use-supabase-hooks";
+import { MobileNav } from "../components/Navigations/MobileNav";
 import { Navbar } from "../components/Navigations/Navbar";
 import { supabase } from "../lib/supabase";
 
@@ -28,9 +29,10 @@ const Home: NextPage = ({ user }: any) => {
   return (
     <>
       <Navbar />
-      <div className="relative flex lg:justify-center md:gap-x-20 flex-col lg:flex-row min-h-screen  items-center overflow-hidden lg:pt-20">
+      <MobileNav />
+      <div className="relative flex lg:justify-center md:gap-x-20 flex-col justify-center lg:flex-row min-h-screen  items-center overflow-hidden lg:pt-20">
         <div className="text-white z-20  absolute bottom-6 flex items-center flex-col  lg:static lg:items-start max-w-[28rem]  ">
-          <h1 className="lg:text-5xl lg:font-bold text-xl mt-2 font-sans-pro text-center  lg:text-left">
+          <h1 className="lg:text-5xl font-bold text-3xl mt-2 font-sans-pro text-center  lg:text-left">
             Chess Mates
           </h1>
           <br />
@@ -63,7 +65,7 @@ const Home: NextPage = ({ user }: any) => {
                     provider: "discord",
                   });
                 }}
-                className="bg-[#5344FF] h-10 w-[5rem] lg:w-full rounded text-[0.7rem] lg:text-sm"
+                className="bg-[#5344FF] h-10 w-fit px-7 lg:px-0 lg:w-full rounded text-[0.7rem] lg:text-sm"
               >
                 Continue with discord
               </button>
@@ -81,12 +83,12 @@ const Home: NextPage = ({ user }: any) => {
             </>
           )}
         </div>
-        <div className="md:block ">
-          <Image
+
+        <div className="md:flex justify-center items-center ">
+          <img
             src={"/assets/landing.svg"}
             alt={"bgimage"}
-            width={500}
-            height={500}
+            className="w-[15rem] h-[15rem] lg:h-[30rem] lg:w-[30rem] opacity-50 lg:opacity-100 "
           />
         </div>
       </div>

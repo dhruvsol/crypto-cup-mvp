@@ -124,7 +124,6 @@ const NFTs = () => {
       }
     }
   }, [solanaURl]);
-  console.log(notfounds);
 
   const GetImage = async () => {
     const highest = getHighestRole(userInfo?.roles);
@@ -304,7 +303,7 @@ const NFTs = () => {
                   Just a few steps to get started and get your NFT
                 </p>
               </div>
-              <div className="relative bg-[#FFFFFF] px-3 py-2 w-[20rem] h-[20rem] lg:w-[30rem] lg:h-max lg:flex lg:flex-col lg:items-start lg:p-8 lg:mt-7 lg:rounded-xl">
+              <div className="relative bg-[#FFFFFF] px-3 py-2 w-[20rem] h-max lg:w-[30rem] lg:h-max lg:flex lg:flex-col lg:items-start lg:p-8 lg:mt-7 lg:rounded-xl">
                 <div className="flex justify-center items-center  gap-x-4 ">
                   <div className=" bg-[#5344FF] p-2 rounded-full  ">
                     <AiFillCheckCircle size={"1.2rem"} color={"white"} />
@@ -350,7 +349,7 @@ const NFTs = () => {
                 <div className=" mt-11 w-full">
                   <div className="flex justify-center items-center w-full  gap-x-4 ">
                     {loading ? (
-                      <div className="lg:ml-0.5" role="status">
+                      <div className=" hidden md:block lg:ml-0.5" role="status">
                         <svg
                           aria-hidden="true"
                           className=" w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-[#5344FF]"
@@ -369,7 +368,7 @@ const NFTs = () => {
                         </svg>
                       </div>
                     ) : (
-                      <div className=" bg-[#5344FF] p-2 rounded-full  ">
+                      <div className="hidden md:block bg-[#5344FF] p-2 rounded-full  ">
                         <AiFillCheckCircle size={"1.2rem"} color={"white"} />
                       </div>
                     )}
@@ -381,7 +380,7 @@ const NFTs = () => {
                         setMint(true);
                         setLoadingNFT(true);
                       }}
-                      className="bg-[#5344FF] disabled:opacity-50 h-10 w-full px-5 lg:w-full rounded text-[0.7rem] text-white  lg:text-base"
+                      className="bg-[#5344FF] disabled:opacity-50 mt-5 lg:mt-0 h-10 w-full px-5 lg:w-full rounded text-[0.7rem] text-white  lg:text-base"
                     >
                       Get Your NFT
                     </button>
