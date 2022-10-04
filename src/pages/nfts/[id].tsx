@@ -126,24 +126,14 @@ const NFTs = () => {
     const highest = getHighestRole(userInfo?.roles);
 
     await axios
-      .post(
-        "https://chess-champs-api-production.up.railway.app/api/v1/utils/xp-card",
-        {
-          name: userInfo?.displayName,
-          level: xpInfo?.level,
-          xp: xpInfo?.xp,
-          rank: xpInfo?.rank,
-          icon: roleName[highest],
-          is_winner: highest != 7 ? false : true,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionToken?.access_token}`,
-          },
-        }
-      )
+      .post("/api/image", {
+        rank: xpInfo?.xp,
+        role: roleName[highest],
+        iswinner: highest != 7 ? false : true,
+        token: sessionToken?.access_token,
+      })
       .then((r) => {
-        setImgUrl(r.data.image_url);
+        setImgUrl(r.data.url);
         setLoadingNFT(false);
       });
   };
@@ -409,8 +399,8 @@ const NFTs = () => {
                   <Image
                     src={imgUrl}
                     alt="nft Image"
-                    width={600}
-                    height={250}
+                    width={400}
+                    height={400}
                     priority
                   />
                   <button

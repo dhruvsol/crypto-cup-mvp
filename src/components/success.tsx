@@ -25,7 +25,7 @@ export const Success = (props: Props) => {
         </p>
       </div>
       <div className="my-10">
-        <Image src={imgUrl} alt="nft Image" width={600} height={250} priority />
+        <Image src={imgUrl} alt="nft Image" width={400} height={400} priority />
       </div>
 
       <div>
