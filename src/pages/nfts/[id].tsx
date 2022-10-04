@@ -392,7 +392,7 @@ const NFTs = () => {
           {mint && !success && (
             <>
               {!loadingNFT ? (
-                <div className="relative z-40 lg:mt-32">
+                <div className="relative z-40 lg:mt-8">
                   {!solanaURl ? (
                     <div className="flex justify-center min-h-screen  w-full items-center flex-col">
                       <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
