@@ -133,7 +133,7 @@ const NFTs = () => {
       .post("/api/image", {
         rank: xpInfo?.xp,
         role: roleName[highest],
-        iswinner: highest === 7 ? false : true,
+        iswinner: highest !== 7 ? "false" : "true",
         token: sessionToken?.access_token,
       })
       .then((r) => {
@@ -141,6 +141,7 @@ const NFTs = () => {
         setLoadingNFT(false);
       });
   };
+
   const GetUrl = async (URI: string) => {
     const res = axios.post(
       "https://chess-champs-api-production.up.railway.app/api/v1/generate",
