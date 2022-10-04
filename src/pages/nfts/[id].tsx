@@ -128,12 +128,12 @@ const NFTs = () => {
 
   const GetImage = async () => {
     const highest = getHighestRole(userInfo?.roles);
-
+    console.log(highest !== 7 ? "false" : "true", "highest-role");
     await axios
       .post("/api/image", {
         rank: xpInfo?.xp,
         role: roleName[highest],
-        iswinner: highest !== 7 ? "false" : "true",
+        winner: highest !== 7 ? "false" : "true",
         token: sessionToken?.access_token,
       })
       .then((r) => {

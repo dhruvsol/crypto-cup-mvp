@@ -6,12 +6,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { rank, role, winner, token } = req.body;
+  console.log(winner);
+
   const { data } = await axios.post(
     "https://chess-champs-nft-image-generator.up.railway.app/api/v1/generate",
     {
       rank: rank,
       role: role,
-      iswinner: winner,
+      isWinner: winner,
     },
     {
       headers: {
