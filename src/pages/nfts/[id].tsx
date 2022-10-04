@@ -133,7 +133,7 @@ const NFTs = () => {
       .post("/api/image", {
         rank: xpInfo?.xp,
         role: roleName[highest],
-        iswinner: highest != 7 ? false : true,
+        iswinner: highest === 7 ? false : true,
         token: sessionToken?.access_token,
       })
       .then((r) => {
@@ -392,7 +392,7 @@ const NFTs = () => {
           {mint && !success && (
             <>
               {!loadingNFT ? (
-                <div className="relative z-40">
+                <div className="relative z-40 lg:mt-32">
                   {!solanaURl ? (
                     <div className="flex justify-center min-h-screen  w-full items-center flex-col">
                       <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
@@ -405,8 +405,8 @@ const NFTs = () => {
                       <Image
                         src={imgUrl}
                         alt="nft Image"
-                        width={400}
-                        height={400}
+                        width={300}
+                        height={300}
                         priority
                       />
                       <button

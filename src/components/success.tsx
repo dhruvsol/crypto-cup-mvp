@@ -9,7 +9,7 @@ interface Props {
 export const Success = (props: Props) => {
   const { imgUrl } = props;
   return (
-    <div className="z-40 pt-10 relative flex justify-center items-center min-h-screen flex-col gap-y-3 ">
+    <div className="z-40 pt-10 lg:mt-32 relative flex justify-center items-center min-h-screen flex-col gap-y-3 ">
       <Image
         src="/assets/success.png"
         alt="square Icon"
@@ -25,7 +25,7 @@ export const Success = (props: Props) => {
         </p>
       </div>
       <div className="my-10">
-        <Image src={imgUrl} alt="nft Image" width={400} height={400} priority />
+        <Image src={imgUrl} alt="nft Image" width={300} height={300} priority />
       </div>
 
       <div>
