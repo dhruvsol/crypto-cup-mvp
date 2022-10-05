@@ -23,6 +23,7 @@ import { clusterApiUrl, Connection, Keypair } from "@solana/web3.js";
 import { Success } from "../../components/success";
 import { Navbar } from "../../components/Navigations/Navbar";
 import { NOTFOUND } from "dns";
+import { Access } from "../../components/misc/Access";
 const roleName = [
   "",
   "pawn",
@@ -455,10 +456,16 @@ const NFTs = () => {
                       </p>
                       <div ref={qrRef} />
                       <button
+                        disabled={true}
+                        className="bg-[#590059] hidden lg:block disabled:opacity-50 cursor-not-allowed h-10 w-80 mt-5 px-5  rounded text-[0.7rem] text-white  lg:text-base"
+                      >
+                        Tap to Mint
+                      </button>
+                      <button
                         onClick={() => {
                           router.push(solanaURl);
                         }}
-                        className="bg-[#590059] disabled:opacity-50 h-10 w-80 mt-5 px-5  rounded text-[0.7rem] text-white  lg:text-base"
+                        className="bg-[#590059] block lg:hidden disabled:opacity-50 h-10 w-80 mt-5 px-5  rounded text-[0.7rem] text-white  lg:text-base"
                       >
                         Tap to Mint
                       </button>
@@ -496,7 +503,7 @@ const NFTs = () => {
           {success && <Success signature={signature} imgUrl={imgUrl} />}
         </>
       )}
-      {notfounds && "fuck"}
+      {notfounds && <Access />}
     </>
   );
 };

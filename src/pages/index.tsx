@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { GetServerSideProps, NextPage } from "next";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth, useUser } from "use-supabase-hooks";
@@ -76,9 +77,19 @@ const Home: NextPage = ({ user }: any) => {
                 onClick={() => {
                   router.push(`/nfts/${UserData.identities![0]?.id}`);
                 }}
-                className="bg-[#5344FF] h-10 w-fit px-5 lg:w-full rounded text-[0.7rem] lg:text-sm"
+                className="bg-[#5344FF] h-10 w-fit px-5 lg:w-full flex justify-center items-center rounded text-[0.7rem] lg:text-sm"
               >
-                Continue as {UserData?.email}
+                Continue as
+                <span className="mx-3 flex justify-center items-center">
+                  <Image
+                    className="rounded-full "
+                    src={UserData?.user_metadata.avatar_url}
+                    alt="avatar url"
+                    width={25}
+                    height={25}
+                  />
+                  {UserData.user_metadata?.name}
+                </span>
               </button>
             </>
           )}
