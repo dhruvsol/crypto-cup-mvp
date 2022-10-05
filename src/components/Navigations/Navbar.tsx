@@ -8,6 +8,7 @@ import { boolean } from "zod";
 import { supabase } from "../../lib/supabase";
 export const Navbar = () => {
   const { user, loading } = useUser(supabase);
+  const { signIn } = useAuth(supabase);
   const [userOn, setUserOn] = useState<boolean>(false);
   const router = useRouter();
   useEffect(() => {
@@ -91,7 +92,14 @@ export const Navbar = () => {
             )}
 
             {!userOn ? (
-              <h1 className="text-[#5344FF] font-semibold text-base">
+              <h1
+                onClick={() => {
+                  signIn({
+                    provider: "discord",
+                  });
+                }}
+                className="text-[#5344FF] font-semibold text-base"
+              >
                 Connect Discord
               </h1>
             ) : (

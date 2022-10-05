@@ -22,10 +22,10 @@ const Home: NextPage = ({ user }: any) => {
     }
   }, [clientUser, user]);
   useEffect(() => {
-    if (user?.app_metadata.provider != "discord") {
+    if (clientUser?.app_metadata.provider != "discord") {
       signOut();
     }
-  }, [user?.app_metadata.provider]);
+  }, [clientUser?.app_metadata.provider]);
   return (
     <>
       <Navbar />

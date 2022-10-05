@@ -130,7 +130,7 @@ const NFTs = () => {
     console.log(highest !== 7 ? "false" : "true", "highest-role");
     await axios
       .post("/api/image", {
-        rank: xpInfo?.xp,
+        rank: xpInfo?.rank,
         role: roleName[highest],
         winner: highest !== 7 ? "false" : "true",
         token: sessionToken?.access_token,
