@@ -29,9 +29,7 @@ export const Success = (props: Props) => {
       </div>
 
       <div>
-        <Link
-          href={`https://explorer.solana.com/address/${props.signature}?cluster=devnet`}
-        >
+        <Link href={`https://explorer.solana.com/address/${props.signature}`}>
           <a target={"_blank"}>
             <button className="w-80 h-10 flex justify-center items-center gap-x-2 border border-[#32375D] text-white ">
               View <BsArrowUpRight fontSize={"1rem"} />

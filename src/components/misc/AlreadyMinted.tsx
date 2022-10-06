@@ -3,11 +3,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
-export const MobileNav = () => {
+const AlreadyMinted = () => {
   const router = useRouter();
   return (
     <>
-      <div className="fixed flex justify-center items-center w-full top-0 z-40 mt-5 sm:mt-16  md:hidden">
+      <div className="flex justify-center items-center min-h-screen space-y-20 flex-col w-full">
         <div className="flex justify-center items-center gap-x-3">
           <div
             onClick={() => {
@@ -42,7 +42,20 @@ export const MobileNav = () => {
             </a>
           </Link>
         </div>
+        <div>
+          <h1 className="text-2xl font-sans-pro font-semibold text-white text-center">
+            You have already Minted the NFT
+          </h1>
+          <p className="text-base text-white font-sans-pro text-center mb-6">
+            You want to update the NFT then join the discord server
+          </p>
+          <p className="text-base text-yellow-500 font-sans-pro text-center ">
+            If you think this is a mistake then contact the moderators
+          </p>
+        </div>
       </div>
     </>
   );
 };
+
+export default AlreadyMinted;

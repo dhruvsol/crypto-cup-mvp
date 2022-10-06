@@ -24,6 +24,7 @@ import { Success } from "../../components/success";
 import { Navbar } from "../../components/Navigations/Navbar";
 import { NOTFOUND } from "dns";
 import { Access } from "../../components/misc/Access";
+import AlreadyMinted from "../../components/misc/AlreadyMinted";
 const roleName = [
   "",
   "pawn",
@@ -67,17 +68,39 @@ const NFTs = () => {
   const [solanaURl, setSolanaUrl] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
   const [paid, setPaid] = useState<boolean | null>(null);
-  const connection = new Connection(clusterApiUrl("devnet"));
+  const connection = new Connection(clusterApiUrl("mainnet-beta"));
   const [signature, setSignature] = useState<string>("");
   const [notfounds, setNotFound] = useState<boolean>(false);
+  const [alreadyMinted, setAlreadyMinted] = useState<boolean>(false);
   const client = new Web3Storage({
     token: process.env.NEXT_PUBLIC_WEB3_STORAGE as string,
   });
   const reference = useMemo(() => {
     return Keypair.generate();
   }, []);
+
+  const CheckStatus = async () => {
+    await axios
+      .get(
+        `https://chess-champs-api-production.up.railway.app/api/v1/utils/can-mint/?user=${router.query.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${sessionToken?.access_token}`,
+          },
+        }
+      )
+      .catch((error) => {
+        if (error.response.status === 400) {
+          console.log("seting true");
+          setAlreadyMinted(true);
+        }
+      });
+  };
+
   useEffect(() => {
     const GetInfo = async () => {
+      await CheckStatus();
+
       setLoading(true);
       await axios
         .post(
@@ -152,7 +175,7 @@ const NFTs = () => {
         uri: URI,
         label: "Crypto Cup",
         icon: "https://candypay.fun/logo.png",
-        network: "devnet",
+        network: "mainnet",
         reference: reference.publicKey.toString(),
       },
       {
@@ -292,140 +315,73 @@ const NFTs = () => {
       <div className="absolute z-10 top-0 w-full h-1/2">
         <Image src="/square.png" alt="squares" layout="fill" />
       </div>
-      {notfounds === false && (
+      {!alreadyMinted && (
         <>
-          {!mint && (
-            <div className="z-40 pt-20 relative flex justify-center min-h-screen items-center flex-col gap-y-3 ">
-              <div className="flex items-center flex-col mt-3">
-                <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
-                  Mint a Chess Mates
-                </h1>
-                <p className="text-white font-medium text-xs lg:text-base">
-                  Just a few steps to get started and get your NFT
-                </p>
-              </div>
-              <div className="relative bg-[#FFFFFF] px-3 py-2 w-[20rem] h-max lg:w-[30rem] lg:h-max lg:flex lg:flex-col lg:items-start lg:p-8 lg:mt-7 lg:rounded-xl">
-                <div className="flex justify-center items-center  gap-x-4 ">
-                  <div className=" bg-[#5344FF] p-2 rounded-full  ">
-                    <AiFillCheckCircle size={"1.2rem"} color={"white"} />
-                  </div>
-                  <div className="flex flex-col justify-center py-4 items-start ">
-                    <h1 className="text-xs text-black font-medium lg:text-base">
-                      Discord Connected
+          {notfounds === false && (
+            <>
+              {!mint && (
+                <div className="z-40 pt-20 relative flex justify-center min-h-screen items-center flex-col gap-y-3 ">
+                  <div className="flex items-center flex-col mt-3">
+                    <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
+                      Mint a Chess Mates
                     </h1>
-                    <h3 className="text-xs text-[#464C72]  font-medium lg:text-base">
-                      {userInfo?.displayName} is connected and verified
-                    </h3>
+                    <p className="text-white font-medium text-xs lg:text-base">
+                      Just a few steps to get started and get your NFT
+                    </p>
                   </div>
-                </div>
-                <hr className="border-[#24273D] mx-10 w-[80%]" />
-                <div className="  hidden lg:flex absolute left-12 top-[5.5rem] items-start justify-start h-48 flex-col ">
-                  <div className="bg-[#5344FF]  h-1/2 w-0.5 " />
-                  <div
-                    className={` ${
-                      !loading ? "bg-[#5344FF]" : "bg-[#212640]"
-                    }  h-1/2 w-0.5 `}
-                  />
-                </div>
-                <div className="lg:mx-12 mt-6 lg:my-8 flex justify-center lg:justify-start gap-x-10 items-center w-[18rem]">
-                  <div>
-                    <p className="text-base text-[#464C72]">Level</p>
-                    <h1 className="text-base lg:text-xl text-black">
-                      {xpInfo?.level === undefined ? 0 : xpInfo?.level}
-                    </h1>
-                  </div>
-                  <div>
-                    <p className="text-base text-[#464C72]">xp</p>
-                    <h1 className="text-base lg:text-xl text-black">
-                      {xpInfo?.xp === undefined ? 0 : xpInfo?.xp}XP
-                    </h1>
-                  </div>
-                  <div>
-                    <p className="text-base text-[#464C72]">Rank</p>
-                    <h1 className="text-base lg:text-xl text-black">
-                      #{xpInfo?.rank === undefined ? 0 : xpInfo?.rank}
-                    </h1>
-                  </div>
-                </div>
-                <div className=" mt-11 w-full">
-                  <div className="flex justify-center items-center w-full  gap-x-4 ">
-                    {loading ? (
-                      <div className=" hidden md:block lg:ml-0.5" role="status">
-                        <svg
-                          aria-hidden="true"
-                          className=" w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-[#5344FF]"
-                          viewBox="0 0 100 101"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                            fill="currentColor"
-                          />
-                          <path
-                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                            fill="currentFill"
-                          />
-                        </svg>
-                      </div>
-                    ) : (
-                      <div className="hidden md:block bg-[#5344FF] p-2 rounded-full  ">
+                  <div className="relative bg-[#FFFFFF] px-3 py-2 w-[20rem] h-max lg:w-[30rem] lg:h-max lg:flex lg:flex-col lg:items-start lg:p-8 lg:mt-7 lg:rounded-xl">
+                    <div className="flex justify-center items-center  gap-x-4 ">
+                      <div className=" bg-[#5344FF] p-2 rounded-full  ">
                         <AiFillCheckCircle size={"1.2rem"} color={"white"} />
                       </div>
-                    )}
-
-                    <button
-                      disabled={loading}
-                      onClick={() => {
-                        GetImage();
-                        setMint(true);
-                        setLoadingNFT(true);
-                      }}
-                      className="bg-[#5344FF] disabled:opacity-50 mt-5 lg:mt-0 h-10 w-full px-5 lg:w-full rounded text-[0.7rem] text-white  lg:text-base"
-                    >
-                      Get Your NFT
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          {mint && !success && (
-            <>
-              {!loadingNFT ? (
-                <div className="relative z-40 lg:mt-8">
-                  {!solanaURl ? (
-                    <div className="flex justify-center min-h-screen  w-full items-center flex-col">
-                      <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
-                        Claim Your NFT
-                      </h1>
-                      <br />
-                      <p className="text-white font-medium text-xs lg:text-base mb-7">
-                        Press the button below to mint your NFT
-                      </p>
-                      <Image
-                        src={imgUrl}
-                        alt="nft Image"
-                        width={300}
-                        height={300}
-                        priority
+                      <div className="flex flex-col justify-center py-4 items-start ">
+                        <h1 className="text-xs text-black font-medium lg:text-base">
+                          Discord Connected
+                        </h1>
+                        <h3 className="text-xs text-[#464C72]  font-medium lg:text-base">
+                          {userInfo?.displayName} is connected and verified
+                        </h3>
+                      </div>
+                    </div>
+                    <hr className="border-[#24273D] mx-10 w-[80%]" />
+                    <div className="  hidden lg:flex absolute left-12 top-[5.5rem] items-start justify-start h-48 flex-col ">
+                      <div className="bg-[#5344FF]  h-1/2 w-0.5 " />
+                      <div
+                        className={` ${
+                          !loading ? "bg-[#5344FF]" : "bg-[#212640]"
+                        }  h-1/2 w-0.5 `}
                       />
-                      <button
-                        onClick={() => {
-                          setClaimNFT(true);
-                          setPaid(false);
-                          uploadMeta();
-                        }}
-                        className="bg-[#590059] font-sans-pro font-semibold mt-10 h-10 w-[20rem] px-5 lg:w-[20rem] rounded text-[0.7rem] text-white  lg:text-base"
-                      >
-                        {claimNFT ? (
+                    </div>
+                    <div className="lg:mx-12 mt-6 lg:my-8 flex justify-center lg:justify-start gap-x-10 items-center w-[18rem]">
+                      <div>
+                        <p className="text-base text-[#464C72]">Level</p>
+                        <h1 className="text-base lg:text-xl text-black">
+                          {xpInfo?.level === undefined ? 0 : xpInfo?.level}
+                        </h1>
+                      </div>
+                      <div>
+                        <p className="text-base text-[#464C72]">xp</p>
+                        <h1 className="text-base lg:text-xl text-black">
+                          {xpInfo?.xp === undefined ? 0 : xpInfo?.xp}XP
+                        </h1>
+                      </div>
+                      <div>
+                        <p className="text-base text-[#464C72]">Rank</p>
+                        <h1 className="text-base lg:text-xl text-black">
+                          #{xpInfo?.rank === undefined ? 0 : xpInfo?.rank}
+                        </h1>
+                      </div>
+                    </div>
+                    <div className=" mt-11 w-full">
+                      <div className="flex justify-center items-center w-full  gap-x-4 ">
+                        {loading ? (
                           <div
-                            className="lg:ml-0.5 flex justify-center"
+                            className=" hidden md:block lg:ml-0.5"
                             role="status"
                           >
                             <svg
                               aria-hidden="true"
-                              className=" w-8 h-8 text-gray-200 animate-spin dark:text-black fill-[#2713ff]"
+                              className=" w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-[#5344FF]"
                               viewBox="0 0 100 101"
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg"
@@ -441,69 +397,148 @@ const NFTs = () => {
                             </svg>
                           </div>
                         ) : (
-                          "Claim your NFT"
+                          <div className="hidden md:block bg-[#5344FF] p-2 rounded-full  ">
+                            <AiFillCheckCircle
+                              size={"1.2rem"}
+                              color={"white"}
+                            />
+                          </div>
                         )}
-                      </button>
+
+                        <button
+                          disabled={loading}
+                          onClick={() => {
+                            GetImage();
+                            setMint(true);
+                            setLoadingNFT(true);
+                          }}
+                          className="bg-[#5344FF] disabled:opacity-50 mt-5 lg:mt-0 h-10 w-full px-5 lg:w-full rounded text-[0.7rem] text-white  lg:text-base"
+                        >
+                          Get Your NFT
+                        </button>
+                      </div>
                     </div>
-                  ) : (
-                    <div className="flex justify-center min-h-screen w-full items-center flex-col">
-                      <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
-                        Claim Your NFT
-                      </h1>
-                      <br />
-                      <p className="text-white font-medium text-xs lg:text-base mb-7">
-                        Scan the QRCode from your wallet
-                      </p>
-                      <div ref={qrRef} />
-                      <button
-                        disabled={true}
-                        className="bg-[#590059] hidden lg:block disabled:opacity-50 cursor-not-allowed h-10 w-80 mt-5 px-5  rounded text-[0.7rem] text-white  lg:text-base"
-                      >
-                        Tap to Mint
-                      </button>
-                      <button
-                        onClick={() => {
-                          router.push(solanaURl);
-                        }}
-                        className="bg-[#590059] block lg:hidden disabled:opacity-50 h-10 w-80 mt-5 px-5  rounded text-[0.7rem] text-white  lg:text-base"
-                      >
-                        Tap to Mint
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div
-                  className="lg:ml-0.5 flex justify-center min-h-screen flex-col lg:gap-y-6 w-full items-center"
-                  role="status"
-                >
-                  <svg
-                    aria-hidden="true"
-                    className=" w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-[#5344FF]"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                  <h1 className="flex justify-center text-2xl font-bold text-white">
-                    Getting NFT Ready
-                  </h1>
+                  </div>
                 </div>
               )}
+              {mint && !success && (
+                <>
+                  {!loadingNFT ? (
+                    <div className="relative z-40 lg:mt-8">
+                      {!solanaURl ? (
+                        <div className="flex justify-center min-h-screen  w-full items-center flex-col">
+                          <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
+                            Claim Your NFT
+                          </h1>
+                          <br />
+                          <p className="text-white font-medium text-xs lg:text-base mb-7">
+                            Press the button below to mint your NFT
+                          </p>
+                          <Image
+                            src={imgUrl}
+                            alt="nft Image"
+                            width={300}
+                            height={300}
+                            priority
+                          />
+                          <button
+                            onClick={() => {
+                              setClaimNFT(true);
+                              setPaid(false);
+                              uploadMeta();
+                            }}
+                            className="bg-[#590059] font-sans-pro font-semibold mt-10 h-10 w-[20rem] px-5 lg:w-[20rem] rounded text-[0.7rem] text-white  lg:text-base"
+                          >
+                            {claimNFT ? (
+                              <div
+                                className="lg:ml-0.5 flex justify-center"
+                                role="status"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  className=" w-8 h-8 text-gray-200 animate-spin dark:text-black fill-[#2713ff]"
+                                  viewBox="0 0 100 101"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                    fill="currentColor"
+                                  />
+                                  <path
+                                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                    fill="currentFill"
+                                  />
+                                </svg>
+                              </div>
+                            ) : (
+                              "Claim your NFT"
+                            )}
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex justify-center min-h-screen w-full items-center flex-col">
+                          <h1 className="font-sans-pro font-bold text-white text-2xl lg:text-4xl ">
+                            Claim Your NFT
+                          </h1>
+                          <br />
+                          <p className="text-white font-medium text-xs lg:text-base mb-7">
+                            Scan the QRCode from your wallet
+                          </p>
+                          <div ref={qrRef} />
+                          <button
+                            disabled={true}
+                            className="bg-[#590059] hidden lg:block disabled:opacity-50 cursor-not-allowed h-10 w-80 mt-5 px-5  rounded text-[0.7rem] text-white  lg:text-base"
+                          >
+                            Tap to Mint
+                          </button>
+                          <button
+                            onClick={() => {
+                              router.push(solanaURl);
+                            }}
+                            className="bg-[#590059] block lg:hidden disabled:opacity-50 h-10 w-80 mt-5 px-5  rounded text-[0.7rem] text-white  lg:text-base"
+                          >
+                            Tap to Mint
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div
+                      className="lg:ml-0.5 flex justify-center min-h-screen flex-col lg:gap-y-6 w-full items-center"
+                      role="status"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className=" w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-[#5344FF]"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                      <h1 className="flex justify-center text-2xl font-bold text-white">
+                        Getting NFT Ready
+                      </h1>
+                    </div>
+                  )}
+                </>
+              )}
+              {success && <Success signature={signature} imgUrl={imgUrl} />}
             </>
           )}
-          {success && <Success signature={signature} imgUrl={imgUrl} />}
+          {notfounds && <Access />}
         </>
       )}
-      {notfounds && <Access />}
+
+      {alreadyMinted && <AlreadyMinted />}
     </>
   );
 };
