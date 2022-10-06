@@ -290,7 +290,7 @@ const NFTs = () => {
     }
   }, [solanaURl]);
 
-  const sendAddress = useCallback((mint: string, pubkey: string) => {
+  const sendAddress = (mint: string, pubkey: string) => {
     if (success) return;
     setSuccess(true);
     axios.post(
@@ -306,7 +306,7 @@ const NFTs = () => {
         },
       }
     );
-  }, []);
+  };
 
   return (
     <>

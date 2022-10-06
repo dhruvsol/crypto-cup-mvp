@@ -5,15 +5,6 @@ const NFTCard = () => {
   return (
     <>
       <div className="relative bg-[#1D2036] h-fit w-[33rem] rounded-lg flex justify-start items-start p-6">
-        <div className=" mr-8">
-          <Image
-            priority
-            src="/winner.png"
-            alt="winner"
-            width={180}
-            height={180}
-          />
-        </div>
         <div className="mr-5">
           <div className="">
             <p className="text-sm text-[#464C72]">Name</p>
