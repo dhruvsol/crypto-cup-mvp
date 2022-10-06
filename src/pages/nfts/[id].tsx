@@ -22,7 +22,6 @@ import {
 import { clusterApiUrl, Connection, Keypair } from "@solana/web3.js";
 import { Success } from "../../components/success";
 import { Navbar } from "../../components/Navigations/Navbar";
-import { NOTFOUND } from "dns";
 import { Access } from "../../components/misc/Access";
 import AlreadyMinted from "../../components/misc/AlreadyMinted";
 const roleName = [
@@ -490,7 +489,7 @@ const NFTs = () => {
                             disabled={true}
                             className="bg-[#590059] hidden lg:block disabled:opacity-50 cursor-not-allowed h-10 w-80 mt-5 px-5  rounded text-[0.7rem] text-white  lg:text-base"
                           >
-                            Tap to Mint
+                            Mint is mobile-only
                           </button>
                           <button
                             onClick={() => {

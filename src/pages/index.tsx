@@ -30,7 +30,7 @@ const Home: NextPage = ({ user }: any) => {
   }, [clientUser?.app_metadata.provider]);
   return (
     <>
-      <Navbar />
+      <Navbar setUserData={setUserData} />
       <MobileNav />
       <div className="relative hidden lg:flex lg:justify-center md:gap-x-20 flex-col justify-center lg:flex-row min-h-screen  items-center overflow-hidden lg:pt-20">
         <div className="text-white z-20  absolute bottom-6 flex items-center flex-col  lg:static lg:items-start max-w-[28rem]  ">
@@ -76,13 +76,13 @@ const Home: NextPage = ({ user }: any) => {
             <>
               <button
                 onClick={() => {
-                  router.push(`/nfts/${UserData.identities![0]?.id}`);
+                  router.push(`/nfts/${UserData?.identities![0]?.id}`);
                 }}
                 className="bg-[#5344FF] h-10 w-fit px-5 lg:w-full flex justify-center items-center rounded text-[0.7rem] lg:text-sm"
               >
                 Continue as
                 <span className="mx-1 flex justify-center items-center">
-                  {UserData.user_metadata?.name}
+                  {UserData?.user_metadata?.name}
                 </span>
               </button>
             </>
@@ -116,7 +116,7 @@ const Home: NextPage = ({ user }: any) => {
                     provider: "discord",
                   });
                 }}
-                className="bg-[#5344FF] text-white font-medium h-10 w-[80%] px-7 lg:px-0 lg:w-full rounded text-[0.7rem] lg:text-sm"
+                className="bg-[#5344FF] text-white font-medium h-10 w-[90%] px-7 lg:px-0 lg:w-full rounded text-[0.7rem] lg:text-sm"
               >
                 Continue with discord
               </button>
@@ -125,13 +125,13 @@ const Home: NextPage = ({ user }: any) => {
             <>
               <button
                 onClick={() => {
-                  router.push(`/nfts/${UserData.identities![0]?.id}`);
+                  router.push(`/nfts/${UserData?.identities![0]?.id}`);
                 }}
                 className="bg-[#5344FF] h-10 text-white font-semibold  w-[80%] px-5 lg:w-full flex justify-center items-center rounded text-[0.7rem] lg:text-sm"
               >
                 Continue as
                 <span className="flex mx-1 justify-center items-center">
-                  {UserData.user_metadata?.name}
+                  {UserData?.user_metadata?.name}
                 </span>
               </button>
             </>
@@ -162,20 +162,10 @@ const Home: NextPage = ({ user }: any) => {
         <div className="flex justify-center">
           <Link href={"https://candypay.fun"}>
             <a target={"_blank"}>
-              <div className="text-white w-fit flex justify-center gap-x-2 px-4 py-1 rounded-lg border">
-                <Image
-                  width={30}
-                  height={30}
-                  className="cursor-pointer mb-10"
-                  src="/assets/candypay.svg"
-                  alt="logo candypay "
-                />
-                <div>
-                  <h1 className="font-bold uppercase text-[0.5rem] ">
-                    powered by
-                  </h1>
-                  <h1 className="font-medium text-base ">CandyPay</h1>
-                </div>
+              <div className="text-white my-10  mt-7">
+                <h1 className="font-bold uppercase text-base ">
+                  powered by CandyPay
+                </h1>
               </div>
             </a>
           </Link>

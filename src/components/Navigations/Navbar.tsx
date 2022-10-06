@@ -1,14 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import Router, { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { FaDiscord } from "react-icons/fa";
 import { useAuth, useUser } from "use-supabase-hooks";
-import { boolean } from "zod";
+import { GrLogout } from "react-icons/gr";
 import { supabase } from "../../lib/supabase";
-export const Navbar = () => {
-  const { user, loading } = useUser(supabase);
-  const { signIn } = useAuth(supabase);
+interface Props {
+  setUserData?: Dispatch<SetStateAction<any>>;
+}
+export const Navbar = (props: Props) => {
+  const { user } = useUser(supabase);
+  const { signIn, signOut } = useAuth(supabase);
   const [userOn, setUserOn] = useState<boolean>(false);
   const router = useRouter();
   useEffect(() => {
@@ -22,8 +25,8 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className="hidden fixed top-0 z-50 lg:flex justify-center w-full items-center gap-x-5 pt-4">
-        <div className="flex justify-center items-center gap-x-3">
+      <div className="hidden fixed top-0 z-50 md:flex justify-center w-full items-center gap-x-5 pt-4">
+        <div className="flex relative justify-center items-center gap-x-3">
           <div
             onClick={() => {
               router.push("/");
@@ -39,20 +42,10 @@ export const Navbar = () => {
           </div>
           <Link href={"https://candypay.fun"}>
             <a target={"_blank"}>
-              <div className="text-white flex justify-center gap-x-2 px-4 py-1 rounded-lg border">
-                <Image
-                  width={30}
-                  height={30}
-                  className="cursor-pointer mb-10"
-                  src="/assets/candypay.svg"
-                  alt="logo candypay "
-                />
-                <div>
-                  <h1 className="font-bold uppercase text-[0.5rem] ">
-                    powered by
-                  </h1>
-                  <h1 className="font-medium text-base ">CandyPay</h1>
-                </div>
+              <div className="text-white  mt-7">
+                <h1 className="font-bold uppercase text-base ">
+                  powered by CandyPay
+                </h1>
               </div>
             </a>
           </Link>
@@ -103,9 +96,19 @@ export const Navbar = () => {
                 Connect Discord
               </h1>
             ) : (
-              <h1 className="text-white font-semibold text-base">
-                {user?.user_metadata.name}
-              </h1>
+              <>
+                <h1 className="text-white font-semibold text-base">
+                  {user?.user_metadata.name}
+                </h1>
+                <button
+                  onClick={() => {
+                    props.setUserData!(null);
+                    signOut();
+                  }}
+                >
+                  <GrLogout className="text-white   h-7 w-7" />
+                </button>
+              </>
             )}
           </div>
         </div>
