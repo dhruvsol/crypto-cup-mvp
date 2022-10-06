@@ -24,7 +24,7 @@ export const MobileNav = () => {
   const router = useRouter();
   return (
     <>
-      <Disclosure as="nav" className="bg-black">
+      <Disclosure as="nav" className="bg-black lg:hidden">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl mt-2 px-2 sm:px-6 lg:px-8">

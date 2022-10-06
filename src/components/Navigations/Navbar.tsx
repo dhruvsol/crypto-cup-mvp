@@ -25,7 +25,7 @@ export const Navbar = (props: Props) => {
 
   return (
     <>
-      <div className="hidden fixed top-0 z-50 md:flex justify-center w-full items-center gap-x-5 pt-4">
+      <div className="hidden fixed top-0 z-[1000] md:flex justify-center w-full items-center gap-x-5 pt-4">
         <div className="flex relative justify-center items-center gap-x-3">
           <div
             onClick={() => {
@@ -40,15 +40,6 @@ export const Navbar = (props: Props) => {
               alt="logo chess champs"
             />
           </div>
-          <Link href={"https://candypay.fun"}>
-            <a target={"_blank"}>
-              <div className="text-white  mt-7">
-                <h1 className="font-bold uppercase text-base ">
-                  powered by CandyPay
-                </h1>
-              </div>
-            </a>
-          </Link>
         </div>
         <div className="flex justify-center  items-center ">
           <ul className="flex justify-evenly   w-[35rem] ">
@@ -106,7 +97,21 @@ export const Navbar = (props: Props) => {
                     signOut();
                   }}
                 >
-                  <GrLogout className="text-white   h-7 w-7" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    {" "}
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                    />{" "}
+                  </svg>
                 </button>
               </>
             )}
