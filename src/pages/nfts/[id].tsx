@@ -67,7 +67,9 @@ const NFTs = () => {
   const [solanaURl, setSolanaUrl] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
   const [paid, setPaid] = useState<boolean | null>(null);
-  const connection = new Connection(clusterApiUrl("mainnet-beta"));
+  const connection = new Connection(
+    "https://wiser-fittest-river.solana-mainnet.quiknode.pro"
+  );
   const [signature, setSignature] = useState<string>("");
   const [notfounds, setNotFound] = useState<boolean>(false);
   const [alreadyMinted, setAlreadyMinted] = useState<boolean>(false);
@@ -168,11 +170,11 @@ const NFTs = () => {
     const res = axios.post(
       `${process.env.NEXT_PUBLIC_STATIC_URL}/api/v1/generate`,
       {
-        user: "Crypto Cup",
-        name: "Crypto Cup",
+        user: "Chess Champs",
+        name: "Chess Champs",
         symbol: "CPCP",
         uri: URI,
-        label: "Crypto Cup",
+        label: "Chess Champs",
         icon: "https://candypay.fun/logo.png",
         network: "mainnet",
         reference: reference.publicKey.toString(),
