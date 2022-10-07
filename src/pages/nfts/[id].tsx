@@ -81,7 +81,7 @@ const NFTs = () => {
   const CheckStatus = async () => {
     await axios
       .get(
-        `https://chess-champs-api-production.up.railway.app/api/v1/utils/can-mint/?user=${router.query.id}`,
+        `${process.env.NEXT_PUBLIC_STATIC_URL}/api/v1/utils/can-mint/?user=${router.query.id}`,
         {
           headers: {
             Authorization: `Bearer ${sessionToken?.access_token}`,
@@ -103,7 +103,7 @@ const NFTs = () => {
       setLoading(true);
       await axios
         .post(
-          "https://chess-champs-api-production.up.railway.app/api/v1/roles",
+          `${process.env.NEXT_PUBLIC_STATIC_URL}/api/v1/roles`,
           {
             guild: "880024529714425887",
             user: router.query.id,
@@ -122,7 +122,7 @@ const NFTs = () => {
             setUserInfo(r.data.user);
             await axios
               .get(
-                `https://chess-champs-api-production.up.railway.app/api/v1/ranks?id=${router.query.id}`,
+                `${process.env.NEXT_PUBLIC_STATIC_URL}/api/v1/ranks?id=${router.query.id}`,
                 {
                   headers: {
                     Authorization: `Bearer ${sessionToken?.access_token}`,
@@ -166,7 +166,7 @@ const NFTs = () => {
 
   const GetUrl = async (URI: string) => {
     const res = axios.post(
-      "https://chess-champs-api-production.up.railway.app/api/v1/generate",
+      `${process.env.NEXT_PUBLIC_STATIC_URL}/api/v1/generate`,
       {
         user: "Crypto Cup",
         name: "Crypto Cup",
@@ -187,13 +187,13 @@ const NFTs = () => {
   };
   const uploadmetadata = async (img: any) => {
     const metadata = {
-      name: "Crypto Cup",
+      name: "Chess Champs",
       symbol: "CPC",
       description:
-        "Your discord reputation for FTX Crypto Cup Championship as an on-chain NFT, which stays with you forever!!",
+        "Chess Mates is a dynamic NFT that represents your reputation in the Chess Champs community on-chain.",
       seller_fee_basis_points: 10000,
       image: img,
-      external_url: "https://www.ftxcryptocup.com/",
+      external_url: "https://chesschamps.io/",
       attributes: [
         {
           trait_type: "xp",
@@ -213,8 +213,8 @@ const NFTs = () => {
         },
       ],
       collection: {
-        name: "Crypto Cup",
-        family: "Crypto Cup",
+        name: "Chess Mates",
+        family: "Chess Mates",
       },
       properties: {
         files: [{ uri: img, type: "image/png" }],
@@ -294,7 +294,7 @@ const NFTs = () => {
     if (success) return;
     setSuccess(true);
     axios.post(
-      "https://chess-champs-api-production.up.railway.app/api/v1/utils/mint-address",
+      `${process.env.NEXT_PUBLIC_STATIC_URL}/api/v1/utils/mint-address`,
       {
         user: router.query.id,
         public_key: pubkey,
